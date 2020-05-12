@@ -15,7 +15,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'bs_gen_mass_url' && isset($_
                 'key' => 'shorten_url',
                 'compare' => 'NOT EXISTS' // this should work...
             ),
-        )
+        ),
+        'post_per_page' => -1
     );
     $posts = get_posts($args);
     $counter = 0;
