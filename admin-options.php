@@ -55,7 +55,7 @@ function branded_sharebox_register_options_page()
   register_setting('shorten_settings', 'shorten_icon_size', $default_icon_size);
   register_setting('shorten_settings', 'shorten_icon_size_custom', $default);
   register_setting('shorten_settings', 'shorten_url_box', $url_box_config);
-  register_setting('shorten_settings_social_links', 'shorten_url_box', array(
+  register_setting('shorten_settings_social_links', 'shorten_url_social_link', array(
     'type'  =>'array',
     'default'   => array(
         'facebook' =>1,
@@ -78,6 +78,7 @@ function shorten_enqueue_scripts_admin_options($hook)
   wp_enqueue_script('font-awesome', "https://kit.fontawesome.com/14875fd6e4.js", array('jquery'), 1.0, false);
   wp_enqueue_script('branded_sharebox_admin_js', SHORTEN_PLUGIN_URL . '/assets/js/main.js', array('jquery', 'wp-color-picker'), 1.0, false);
   wp_enqueue_style('branded_sharebox_admin_style', SHORTEN_PLUGIN_URL . '/assets/css/admin_style.css');
+  wp_enqueue_style('bs_button_style', SHORTEN_PLUGIN_URL . '/assets/css/style.css');
   wp_enqueue_style('wp-color-picker');
 }
 

@@ -21,7 +21,7 @@
                 <th scope="row">Show on:</th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span>Show on:</span></legend>
+                        <legend class="screen-reader-text"><span>Show on: </span></legend>
                         <p class="description">Select which post types to include</p>
                         <?php
                         $args = array(
@@ -80,9 +80,6 @@
                 </td>
             </tr>
 
-
-
-
             <?php $shorten_show_counter = get_option('shorten_show_counter'); ?>
             <tr class="option-site-visibility">
                 <th scope="row">Display the number of shares:</th>
@@ -97,10 +94,10 @@
             </tr>
             <?php $shorten_should_float = get_option('shorten_should_float'); ?>
             <tr class="option-site-visibility">
-                <th scope="row">Show as floating widget:</th>
+                <th scope="row">Show as sticky widget:</th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span>Show as floating widget</span></legend>
+                        <legend class="screen-reader-text"><span>Show as sticky widget</span></legend>
                         <label for="shorten_should_float"><input name="shorten_should_float" type="checkbox" id="shorten_should_float" value="1" <?php checked($shorten_should_float); ?>>
                             Yes</label>
                         <p class="description">This will also disable "show non singular posts"</p><br>
@@ -129,7 +126,7 @@
                         <p class="description">Select what color should the icons be</p>
                         <label for="shorten_icon_color_brand"><input name="shorten_icon_color" type="radio" id="shorten_icon_color_brand" value="brand" <?php checked('brand' == $shorten_icon_color); ?>>
                             Brand Color</label><br>
-                        <label for="shorten_icon_color_greyscale"><input name="shorten_icon_color" type="radio" id="shorten_icon_color_greyscale" value="greyscale" <?php checked('greyscale' == $shorten_icon_color); ?>>
+                        <label for="shorten_icon_color_grayscale"><input name="shorten_icon_color" type="radio" id="shorten_icon_color_grayscale" value="grayscale" <?php checked('grayscale' == $shorten_icon_color); ?>>
                             Greysale</label><br>
                         <label for="shorten_icon_color_custom"><input name="shorten_icon_color" type="radio" id="shorten_icon_color_custom" value="custom" <?php checked('custom' == $shorten_icon_color); ?>>
                             Custom</label><br>
@@ -182,8 +179,8 @@
                                 <p class="description">Border Width</p> <input name="shorten_url_box[border][width]" style="text-align: right;width: 3rem;" type="number" id="shorten_url_box_border_width" value="<?php echo  $shorten_url_box['border']['width'] ?>">px
                             </label><br>
                             <p class="description"> Select Border Color </p>
-                            <label for="shorten_url_box_border_color_custom_text" class="shorten_url_box_border_color_custom_label"><input type="hidden" style="padding:0;cursor:pointer" name="shorten_url_box[border][color]" class="shorten_url_box_border_color_custom" id="" value="<?php echo $shorten_url_box['border']['color'] ?>">
-                                <input type="text" style="padding:0;cursor:pointer" id="shorten_url_box_border_color_custom_text" data-default-color="<?php echo $shorten_url_box['border']['color'] ?>" value="<?php echo $shorten_url_box['border']['color'] ?>">
+                            <label for="shorten_url_box_border_color_custom_text" class="shorten_url_box_border_color_custom_label"><input type="text" name="shorten_url_box[border][color]" class="shorten_url_box_border_color_custom" id="" value="<?php echo $shorten_url_box['border']['color'] ?>">
+                                <input type="hidden" style="padding:0;cursor:pointer" id="shorten_url_box_border_color_custom_text" data-default-color="<?php echo $shorten_url_box['border']['color'] ?>" value="<?php echo $shorten_url_box['border']['color'] ?>">
                             </label><br>
                         </div>
                     </fieldset>

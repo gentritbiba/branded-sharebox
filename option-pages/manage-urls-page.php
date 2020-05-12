@@ -5,13 +5,13 @@ $GLOBALS['shortened_post_count'] = $wpdb->get_results(
     "SELECT p.post_type as post_type, count(*) as total_posts 
   FROM {$wpdb->prefix}posts as p  INNER  JOIN {$wpdb->prefix}postmeta as pd
   on p.ID = pd.post_id
-  WHERE pd.meta_key = 'shorten_url' and p.post_status = 'publish'
+  WHERE pd.meta_key = 'shorten_url' and (p.post_status = 'publish' OR post_type='attachment')
   GROUP BY p.post_type",
     ARRAY_A
 );
 $GLOBALS['post_count'] = $wpdb->get_results(
     "SELECT post_type, count(*) as total_posts FROM {$wpdb->prefix}posts
-  WHERE post_status = 'publish'
+  WHERE post_status = 'publish' OR post_type='attachment'
   GROUP BY post_type",
     ARRAY_A
 );

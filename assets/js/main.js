@@ -67,6 +67,7 @@
                 
             });
             $('.url-box-border .wp-color-result').bind('style', function(e){
+                console.log('changed');
                 let hex = rgb2hex(this.style['background-color']);
                 // console.log(rgb2hex(this.style['background-color']));
                 border_color_input.val(hex);
@@ -79,7 +80,7 @@
         }
          
         if(jQuery('input[type=radio][name=shorten_icon_color]:checked').val()!= "custom"){
-            jQuery('.wp-picker-container').hide();
+            jQuery('.button-color .wp-picker-container').hide();
         } 
         $('.url-box-border .wp-color-result').css("background-color",$( '#shorten_url_box_border_color_custom_text' ).val());
 

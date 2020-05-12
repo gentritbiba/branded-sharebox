@@ -17,7 +17,17 @@ function bs_content_has_blocks()
     return false !== strpos($content, '<!-- wp:');
 }
 
-
+$GLOBALS['bs_share_links'] = array(
+    'facebook'       =>     "https://www.facebook.com/sharer.php?t=SHARE_TITLE&u=SHARE_URL%2F",
+    'twitter'        =>     "https://twitter.com/intent/tweet?text=SHARE_TITLE&url=https%3A%2F%2FSHARE_URL%2F",
+    'pinterest'      =>     "https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2FSHARE_URL%2F&description=SHARE_TITLE",
+    'linkedin'       =>     "https://www.linkedin.com/shareArticle?title=SHARE_TITLE&url=https%3A%2F%2FSHARE_URL%2F&text=SHARE_TITLE",
+    'reddit'         =>     "https://www.reddit.com/submit?url=https%3A%2F%2FSHARE_URL%2F&title=SHARE_TITLE",
+    'tumblr'         =>     "https://www.tumblr.com/share?&u=https%3A%2F%2FSHARE_URL%2F&v=3&text=SHARE_TITLE",
+    'whatsapp'       =>     "https://web.whatsapp.com/send?text=https%3A%2F%2FSHARE_URL%2F&text=SHARE_TITLE",
+    'messenger'      =>     "https://www.facebook.com/dialog/send?link=https%3A%2F%2FSHARE_URL%2F&app_id=521270401588372&redirect_uri=https%3A%2F%2FSHARE_URL&text=SHARE_TITLE",
+    'telegram'       =>     "https://t.me/share/url?url=https%3A%2F%2FSHARE_URL%2F&text=SHARE_TITLE",
+);
 // Displays social share buttons on the front end
 add_filter("the_content", "shorten_adjacent_post_content");
 function shorten_adjacent_post_content($content)
@@ -32,6 +42,8 @@ function shorten_adjacent_post_content($content)
 
     if (!get_option('shorten_show_non_singular') && !is_singular()) return $content;
 
+
+    $share_title = get_the_title();
     $shorten_url = get_post_meta($id, 'shorten_url', true);
     $shorten_show_on = get_option('shorten_show_on');
 
@@ -44,11 +56,11 @@ function shorten_adjacent_post_content($content)
         switch (get_option('shorten_icon_color')) {
             case 'brand':
                 break;
-            case 'greyscale':
-                $style .= "background-color:#666 !important";
+            case 'grayscale':
+                $style .= " filter:grayscale(100%);";
                 break;
             case 'custom':
-                $style .= "background-color:" . get_option('shorten_icon_color_custom') . "!important;";
+                $style .= " background-color:" . get_option('shorten_icon_color_custom') . "!important;";
                 break;
         }
 
@@ -68,6 +80,13 @@ function shorten_adjacent_post_content($content)
             default:
                 $buttonClassList .= " md";
         }
+        switch (get_option('shorten_button_style')) {
+            case 'round':
+                $buttonClassList .=" icon-circle";
+            case 'square':
+                $buttonClassList .=" icon-square";
+        }
+
         switch (get_option('shorten_align_where')) {
             case 'start':
                 $wrapperClassList .= " bs-align-start";
@@ -85,6 +104,7 @@ function shorten_adjacent_post_content($content)
 
         $shareButtons = "";
         $shareButtons .= "<div class='share-social-buttons-wrapper $wrapperClassList'>";
+        if(get_option( 'shorten_show_counter' ))
         $shareButtons .= $clickCount ? "
             <div class='bs-total'>
                 <span class='bs-label'>$clickCount</span>
@@ -92,15 +112,31 @@ function shorten_adjacent_post_content($content)
                 Shares
             </span>
         </div>" : "";
-        $shareButtons .= "
-        <a class='social-popup' href='https://www.facebook.com/sharer/sharer.php?u=https://$shorten_url' data-post-id='$id' target='_blank' rel='noopener'>
-            <i class='fab social fa-facebook $buttonClassList' style='$style'></i>
-        </a>";
-        $shareButtons .= "
-        <a href='http://twitter.com/share?url=https://$shorten_url' class='social-popup' target='_blank'>
-            <i class='fab social fa-twitter $buttonClassList' style='$style'></i>
-        </a>";
 
+        foreach(safe_array_keys(get_option( 'shorten_url_social_link' )) as $social_buttons_link_name){
+            $share_url_link = str_replace("SHARE_URL", $shorten_url, $GLOBALS['bs_share_links'][$social_buttons_link_name]);
+            $share_url_link = str_replace("SHARE_TITLE", $share_title, $share_url_link);
+            $fa_name = $social_buttons_link_name=="messenger"?"facebook-messenger":$social_buttons_link_name;
+            $shareButtons .= "
+            <a class='social-popup' href='$share_url_link' data-post-id='$id' target='_blank' rel='noopener'>
+                <i class='fab social fa-$fa_name $buttonClassList' style='$style'></i>
+            </a>";
+        }
+        // $shareButtons .= "
+        // <a class='social-popup' href='https://www.facebook.com/sharer/sharer.php?u=https://$shorten_url' data-post-id='$id' target='_blank' rel='noopener'>
+        //     <i class='fab social fa-facebook $buttonClassList' style='$style'></i>
+        // </a>";
+        // $shareButtons .= "
+        // <a href='http://twitter.com/share?url=https://$shorten_url' class='social-popup' target='_blank'>
+        //     <i class='fab social fa-twitter $buttonClassList' style='$style'></i>
+        // </a>";
+        $share_box_border = get_option( 'shorten_url_box' );
+        if($share_box_border['enabled']){
+            $shareButtons .= "<div class='bs-share-url-box' style='border-width:{$share_box_border['border']['width']}px;border-color:{$share_box_border['border']['color']};'>
+                <b>{$share_box_border['label']}</b>
+                <input readonly type='text' class='bs-share-url-box-link' value='https://$shorten_url'> <i onclick='bsCopyToClipboard(this)' class='far fa-copy bs-copy-btn'></i>
+            </div>";
+        }
         $shareButtons .= "</div>";
 
         switch (get_option('shorten_show_at')) {
@@ -138,7 +174,8 @@ function shorten_enqueue_scripts($hook)
 add_action('wp_enqueue_scripts', 'shorten_enqueue_scripts');
 
 // Updates post meta when a new post is created
-add_action('save_post', 'shorten_generate_url_on_post_update');
+add_action('publish_post', 'shorten_generate_url_on_post_update');
+add_action('add_attachment', 'shorten_generate_url_on_post_update');
 function shorten_generate_url_on_post_update($post_id)
 {
     // This function is executed everytime a post is updated
@@ -186,8 +223,7 @@ function generate_shorten_url($api_key, $domain, $destination)
     // echo SHORTEN_PLUGIN_DIR .'HTTP/Request2.php';
     require_once(SHORTEN_PLUGIN_DIR . 'Net/URL2.php');
     require_once(SHORTEN_PLUGIN_DIR . 'HTTP/Request2.php');
-
-
+    if(!$domain)$domain='short.fyi';
     $request = new HTTP_Request2();
     $request->setUrl("https://api.shorten.rest/aliases?domainName=$domain&aliasName=@rnd");
     $request->setMethod(HTTP_Request2::METHOD_POST);
@@ -202,9 +238,10 @@ function generate_shorten_url($api_key, $domain, $destination)
     try {
         $response = $request->send();
         if ($response->getStatus() == 200) {
+            
             $returnObj = json_decode($response->getBody());
             $returnObj->domain = $domain;
-            $returnObj->fullUrl = $domain . '/' . $returnObj->aliasName;
+            $returnObj->fullUrl = $returnObj->domain . '/' . $returnObj->aliasName;
             return $returnObj;
         } else {
             return array('error' => 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
