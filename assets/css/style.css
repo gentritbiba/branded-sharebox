@@ -65,7 +65,7 @@
   display: flex;
 }
 
-.fa.social {
+.fab.social {
     box-sizing: content-box !important;
     padding: 12px;
     font-size: 13px;
@@ -76,17 +76,17 @@
     border-radius: 50%;
     color:white;
   }
-.fa.social.md{
+.fab.social.md{
     padding: 13.33px;
     font-size: 20px;
     width: 20px;
 }
-.fa.social.lg{
+.fab.social.lg{
     padding: 20px;
     font-size: 30px;
     width: 30px;
 }
-.fa:hover {
+.fab:hover {
     opacity: 0.8;
 }
 
