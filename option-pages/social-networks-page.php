@@ -9,17 +9,17 @@
         do_settings_sections('shorten_settings_social_links') ?>
         <table class="form-table" role="presentation">
             <tr valign="top">
-                <th scope="row"><label for="shorten_url_social">API key</label></th>
+                <th scope="row"><label for="shorten_url_social">Social Networks:</label></th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span>Show on:</span></legend>
+                        <legend class="screen-reader-text"><span></span></legend>
                         <p class="description">Select which socials networks to include</p>
                         <?php  $slected_links_list = get_option( 'shorten_url_social_link' );?>
                         <tr class="option-site-visibility">
-                            <th scope="row">Show on:</th>
+                            <th scope="row"></th>
                             <td>
                                 <fieldset class="bs_social_buttons_wrapper">
-                                    <legend class="screen-reader-text"><span>Show on:</span></legend>
+                                    <legend class="screen-reader-text"><span></span></legend>
                                     <?php
                                     $args = array(
                                         'public'   => true,
