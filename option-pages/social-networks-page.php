@@ -18,7 +18,7 @@
                         <tr class="option-site-visibility">
                             <th scope="row"></th>
                             <td>
-                                <fieldset class="bs_social_buttons_wrapper">
+                                <div class="bs_social_buttons_wrapper">
                                     <legend class="screen-reader-text"><span></span></legend>
                                     <?php
                                     $args = array(
@@ -30,7 +30,7 @@
                                         <label for="shorten_url_social_link_<?php echo $link ?>" class="<?php $temp_link = $link;if($temp_link=='messenger')$temp_link = "facebook-messenger";echo "fa-$temp_link"?>">
                                         <?php $label_text = ucfirst($link); if($link=='messenger')$link = "facebook-messenger";echo " <i class='fab social fa-$link'></i> $label_text"?></label><br>
                                     <?php endforeach; ?>
-                                </fieldset>
+                                </div>
                             </td>
                         </tr>
                     </fieldset>

@@ -23,7 +23,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'bs_gen_mass_url' && isset($_
     foreach ($posts as $post) {
         $api_key = get_option('shorten_api_key');
         $domain = get_option('shorten_domain');
-        $generated_url = generate_shorten_url($api_key, $domain, get_permalink($post_id));
+        $generated_url = generate_shorten_url($api_key, $domain, get_permalink($post_id), get_the_title( $post_id ));
         $up = false;
         // $err =
         if ($generated_url->fullUrl) {

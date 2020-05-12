@@ -5,7 +5,7 @@ function branded_sharebox_register_options_page()
     // ect
     'menu_icon' => 'data:image/svg+xml;base64,' . base64_encode('<svg width="20" height="20" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path fill="black" d="M1591 1448q56 89 21.5 152.5t-140.5 63.5h-1152q-106 0-140.5-63.5t21.5-152.5l503-793v-399h-64q-26 0-45-19t-19-45 19-45 45-19h512q26 0 45 19t19 45-19 45-45 19h-64v399zm-779-725l-272 429h712l-272-429-20-31v-436h-128v436z"/></svg>')
   ]);
-  add_menu_page('Branded Sharebox', 'Branded Sharebox', 'manage_options', 'branded_sharebox', 'branded_sharebox_option_page');
+  add_menu_page('Branded Sharebox', 'Branded Sharebox', 'manage_options', 'branded_sharebox', 'branded_sharebox_option_page', 'dashicons-admin-links');
   add_submenu_page('branded_sharebox', 'Manage URLs', 'Manage URLs', 'manage_options', 'branded_sharebox_manage_posts', 'branded_sharebox_option_page_manage_urls');
   add_submenu_page('branded_sharebox', 'Social Networks', 'Social Networks', 'manage_options', 'branded_sharebox_social_networks', 'branded_sharebox_option_page_social_networks');
   $default = array(
@@ -36,7 +36,8 @@ function branded_sharebox_register_options_page()
         'color' => '#000000',
         'width' => 1
       ),
-      'label' => ""
+      'label' => "",
+      'position'  => 'top',
     )
   );
 

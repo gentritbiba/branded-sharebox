@@ -141,10 +141,10 @@
             </tr>
             <?php $shorten_icon_size = get_option('shorten_icon_size'); ?>
             <tr class="option-site-visibility">
-                <th scope="row">Social buttons icon color:</th>
+                <th scope="row">Social buttons icon size:</th>
                 <td>
                     <fieldset>
-                        <legend class="screen-reader-text"><span>Social buttons icon color:</span></legend>
+                        <legend class="screen-reader-text"><span>Social buttons icon size:</span></legend>
                         <p class="description">Select what size should the icons be</p>
                         <label for="shorten_icon_size_small"><input name="shorten_icon_size" type="radio" id="shorten_icon_size_small" value="small" <?php checked('small' == $shorten_icon_size); ?>>
                             Small</label><br>
@@ -170,8 +170,18 @@
                         <legend class="screen-reader-text"><span>Share URL Box:</span></legend>
                         <label for="shorten_url_box_enabled"><input name="shorten_url_box[enabled]" type="checkbox" id="shorten_url_box_enabled" value="1" <?php checked($shorten_url_box['enabled'])??false; ?>>
                             Enable</label><br>
-
+                        <label for="shorten_url_box_position">
+                            <p class="description">Position Text</p>
+                            <select name="shorten_url_box[position]" id="shorten_url_box_position">
+                                <option <?php selected( 'top' == $shorten_url_box['position']) ?> value="top">Top</option>
+                                <option <?php selected( 'bottom' == $shorten_url_box['position']) ?> value="bottom">Bottom</option>
+                                <option <?php selected( 'left' == $shorten_url_box['position']) ?> value="left">Left</option>
+                                <option <?php selected( 'right' == $shorten_url_box['position']) ?> value="right">Right</option>
+                            </select>
+                            <!-- <input name="shorten_url_box[position]" type="text" id="shorten_url_box_position" value="<?php echo ($shorten_url_box['position'])??""; ?>"> -->
+                        </label><br>
                         <div class="url-box-border-options" <?php if (!$shorten_url_box['enabled']) echo "style='display:none'"; ?>>
+                        
                             <label for="shorten_url_box_label">
                                 <p class="description">Label Text</p><input name="shorten_url_box[label]" type="text" id="shorten_url_box_label" value="<?php echo ($shorten_url_box['label'])??""; ?>">
                             </label><br>

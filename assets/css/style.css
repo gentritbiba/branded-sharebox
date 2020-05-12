@@ -29,18 +29,30 @@
     align-items: center;
   }
 .bs-share-url-box{
+  display: inline;
   padding: 5px 10px;
   border: 0px solid;
   border-radius: 10px;
   margin: 10px;
 }
-.bs-share-url-box b {
-  font-family:courier,arial,helvetica;
+.bs-share-url-box a{
+  text-decoration: none !important;
 }
-.bs-share-url-box input{
-  border: none !important;
+.bs-share-url-box-wrapper{
+  /* width: 100%; */
+  /* margin:10px; */
+  display: inline;
+}
+.bs-share-url-box-wrapper b {
+  font-family:courier,arial,helvetica;
+  display: inline;
+}
+.share-social-buttons-wrapper .bs-share-url-box input.bs-share-url-box-link{
+  display: inline;
+  border: none;
   width: 13rem;
-  background: none !important;
+  background: none;
+  padding: 0;
 }
 
 .bs-share-url-box .bs-copy-btn{
