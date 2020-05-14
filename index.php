@@ -6,12 +6,20 @@
  * Plugin URI: https://shorten.rest
  * Author: Shorten.REST
  * Author URI: https://shorten.rest
- * Version: 1.0
+ * Version: 1.1
  */
 define("SHORTEN_PLUGIN_DIR", plugin_dir_path(__FILE__));
 define("SHORTEN_PLUGIN_URL", plugin_dir_url(__FILE__));
 require_once('ajax.php');
 require_once('admin-options.php');
+echo SHORTEN_PLUGIN_URL;
+
+add_shortcode('branded_sharebox','branded_sharebox_shortcode');
+add_filter("the_content", "shorten_adjacent_post_content");
+
+
+
+
 
 function bs_content_has_blocks()
 {
@@ -30,7 +38,6 @@ $GLOBALS['bs_share_links'] = array(
     'telegram'       =>     "https://t.me/share/url?url=https://SHARE_URL&text=SHARE_TITLE",
 );
 // Displays social share buttons on the front end
-add_filter("the_content", "shorten_adjacent_post_content");
 function shorten_adjacent_post_content($content)
 {
 
@@ -269,4 +276,139 @@ function safe_array_keys($arr)
 {
     if (!$arr) return array();
     return array_keys($arr);
+}
+
+
+function branded_sharebox_shortcode(){
+    $content = "";
+    // if(!(in_the_loop() && is_main_query())  )return $content;
+    $id = get_the_ID();
+    // $should_flaot = get_option('shorten_should_float');
+    // if ($should_flaot && !is_singular()) return $content;
+
+
+
+    // if (!get_option('shorten_show_non_singular') && !is_singular()) return $content;
+    // echo $id;
+
+    $share_title = get_the_title();
+    $shorten_url = get_post_meta($id, 'shorten_url', true);
+    if(!$shorten_url)return;
+
+
+        $clickCount = get_post_meta($id, 'link_click_counter', true);
+        $style = "";
+        $buttonClassList = "";
+        $wrapperClassList = "";
+        switch (get_option('shorten_icon_color')) {
+            case 'brand':
+                break;
+            case 'grayscale':
+                $style .= " filter:grayscale(100%);";
+                break;
+            case 'custom':
+                $style .= " background-color:" . get_option('shorten_icon_color_custom') . "!important;";
+                break;
+        }
+
+        switch (get_option('shorten_icon_size')) {
+            case 'small':
+                break;
+            case 'medium':
+                $buttonClassList .= " md";
+                break;
+            case 'large':
+                $buttonClassList .= " lg";
+                break;
+            case 'custom':
+                $custom_size = get_option('shorten_icon_size_custom');
+                if ($custom_size)
+                    $style .= " font-size:{$custom_size}px; width:{$custom_size}px; padding:" . $custom_size * 2 / 3 . "px;";
+                break;
+            default:
+                $buttonClassList .= " md";
+        }
+        switch (get_option('shorten_button_style')) {
+            case 'round':
+                $buttonClassList .= " icon-circle";
+            case 'square':
+                $buttonClassList .= " icon-square";
+        }
+
+        switch (get_option('shorten_align_where')) {
+            case 'start':
+                $wrapperClassList .= " bs-align-start";
+                break;
+            case 'center':
+                $wrapperClassList .= " bs-align-center";
+                break;
+            case 'end':
+                $wrapperClassList .= " bs-align-end";
+                break;
+            default:
+                $wrapperClassList .= " bs-align-center";
+        }
+        // if ($should_flaot) $wrapperClassList .= " bs-pos-fixed";
+
+        $shareButtons = "";
+        $shareButtons .= "<div class='share-social-buttons-wrapper $wrapperClassList'>";
+        $shareBoxBorder = "";
+        $shareBoxBorderStyle = "";
+        $share_box_border = get_option('shorten_url_box');
+        if ($share_box_border['enabled']) {
+            if(in_array($share_box_border['position'], array('left', 'right'))) $shareBoxBorderStyle.= " width:auto; margin:0 5px;";
+            else $shareBoxBorderStyle=" width:100%; margin:10px 0";
+            $shareBoxBorder .= "<div class='bs-share-url-box-wrapper' style='$shareBoxBorderStyle'><b>{$share_box_border['label']}</b><div class='bs-share-url-box' style='border-width:{$share_box_border['border']['width']}px;border-color:{$share_box_border['border']['color']};'>
+                <input readonly type='text' class='bs-share-url-box-link' value='https://$shorten_url'> <i onclick='bsCopyToClipboard(this)' class='far fa-copy bs-copy-btn'></i>
+            </div></div>";
+        }
+        if ($share_box_border['enabled'] && in_array($share_box_border['position'], array('left', 'top')) ) {
+            $shareButtons .= $shareBoxBorder;
+        }        
+        if (get_option('shorten_show_counter'))
+            $shareButtons .= $clickCount ? "
+            <div class='bs-total'>
+                <span class='bs-label'>$clickCount</span>
+                <span class='bs-shares'>
+                Shares
+            </span>
+        </div>" : "";
+
+        foreach (safe_array_keys(get_option('shorten_url_social_link')) as $social_buttons_link_name) {
+            $share_url_link = str_replace("SHARE_URL", $shorten_url, $GLOBALS['bs_share_links'][$social_buttons_link_name]);
+            $share_url_link = str_replace("SHARE_TITLE", $share_title, $share_url_link);
+            $fa_name = $social_buttons_link_name == "messenger" ? "facebook-messenger" : $social_buttons_link_name;
+            $shareButtons .= "
+            <a class='social-popup' href='$share_url_link' data-post-id='$id' target='_blank' rel='noopener'>
+                <i class='fab social fa-$fa_name $buttonClassList' style='$style'></i>
+            </a>";
+        }
+        if ($share_box_border['enabled'] && in_array($share_box_border['position'], array('bottom', 'right')) ) {
+            $shareButtons .= $shareBoxBorder;
+        }    
+        // $shareButtons .= "
+        // <a class='social-popup' href='https://www.facebook.com/sharer/sharer.php?u=https://$shorten_url' data-post-id='$id' target='_blank' rel='noopener'>
+        //     <i class='fab social fa-facebook $buttonClassList' style='$style'></i>
+        // </a>";
+        // $shareButtons .= "
+        // <a href='http://twitter.com/share?url=https://$shorten_url' class='social-popup' target='_blank'>
+        //     <i class='fab social fa-twitter $buttonClassList' style='$style'></i>
+        // </a>";
+        $shareButtons .= "</div>";
+
+        switch (get_option('shorten_show_at')) {
+            case "both":
+                $content = ($content ? ("<div class='bs-f-top'>" . $shareButtons . "</div>") : "") . $content . ("<div class='bs-f-bottom'>" . $shareButtons . "</div>");
+                break;
+            case "top":
+                $content = ("<div class='bs-f-top'>" . $shareButtons . "</div>") . $content;
+                break;
+            case "bottom":
+                $content .= ("<div class='bs-f-bottom'>" . $shareButtons . "</div>");
+                break;
+            default:
+                $content .= $shareButtons;
+        }
+
+    return $content;
 }
