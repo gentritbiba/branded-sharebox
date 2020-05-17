@@ -21,7 +21,7 @@
 /**
  * Base class for exceptions in PEAR
  */
-require_once SHORTEN_PLUGIN_DIR . 'PEAR/Exception.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'PEAR/Exception.php';
 
 /**
  * Base exception class for HTTP_Request2 package

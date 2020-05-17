@@ -21,7 +21,7 @@
 /**
  * Base class for HTTP_Request2 adapters
  */
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Adapter.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Adapter.php';
 
 /**
  * Adapter for HTTP_Request2 wrapping around cURL extension

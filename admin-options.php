@@ -16,17 +16,21 @@ function branded_sharebox_register_options_page()
   $default_show_at = array(
     'type'              => 'string',
     'default'           => 'top',
+    'sanitize_callback' => 'sanitize_text_field',
   );
   $default_color = array(
     'type'              => 'string',
     'default'           => 'brand',
+    'sanitize_callback' => 'sanitize_text_field',
   );
   $default_icon_size = array(
     'type'              => 'string',
     'default'           => 'medium',
+    'sanitize_callback' => 'sanitize_text_field',
   );
   $checkbox =  array(
     'type'              =>  'array',
+    'sanitize_callback' => 'branded_sharebox_sanatize_array'
   );
   $url_box_config = array(
     'type'        => 'array',
@@ -40,29 +44,40 @@ function branded_sharebox_register_options_page()
       'position'  => 'top',
     )
   );
+function branded_sharebox_sanatize_array($arr){
+  if (is_array($arr)) {
+    foreach ($arr as &$tag) {
+        $el = esc_attr($el);
+    }
+    unset( $el );
+  } else {
+      $arr = esc_attr($arr);
+  }
+  return $arr;
+}
 
-
-  register_setting('shorten_settings', 'shorten_api_key', $default);
-  register_setting('shorten_settings', 'shorten_domain', $default);
-  register_setting('shorten_settings', 'shorten_show_on', $checkbox);
-  register_setting('shorten_settings', 'shorten_show_at', $default_show_at);
-  register_setting('shorten_settings', 'shorten_show_counter', array('type'  => 'boolean'));
-  register_setting('shorten_settings', 'shorten_align_where', array('type' => 'string', 'default' => 'center',));
-  register_setting('shorten_settings', 'shorten_button_style', array('type' => 'string', 'default' => 'round',));
-  register_setting('shorten_settings', 'shorten_should_float', array('type'  => 'boolean'));
-  register_setting('shorten_settings', 'shorten_show_non_singular', array('type'  => 'boolean', 'default'  => true));
-  register_setting('shorten_settings', 'shorten_icon_color', $default_color);
-  register_setting('shorten_settings', 'shorten_icon_color_custom', $default);
-  register_setting('shorten_settings', 'shorten_icon_size', $default_icon_size);
-  register_setting('shorten_settings', 'shorten_icon_size_custom', $default);
-  register_setting('shorten_settings', 'shorten_url_box', $url_box_config);
-  register_setting('shorten_settings_social_links', 'shorten_url_social_link', array(
+  register_setting('branded_sharebox_settings', 'branded_sharebox_api_key', $default);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_domain', $default);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_show_on', $checkbox);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_show_at', $default_show_at);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_show_counter', array('type'  => 'boolean'));
+  register_setting('branded_sharebox_settings', 'branded_sharebox_align_where', array('type' => 'string', 'default' => 'center','sanitize_callback' => 'sanitize_text_field'));
+  register_setting('branded_sharebox_settings', 'branded_sharebox_button_style', array('type' => 'string', 'default' => 'round','sanitize_callback' => 'sanitize_text_field'));
+  register_setting('branded_sharebox_settings', 'branded_sharebox_should_float', array('type'  => 'boolean'));
+  register_setting('branded_sharebox_settings', 'branded_sharebox_show_non_singular', array('type'  => 'boolean', 'default'  => true));
+  register_setting('branded_sharebox_settings', 'branded_sharebox_icon_color', $default_color);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_icon_color_custom', $default);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_icon_size', $default_icon_size);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_icon_size_custom', $default);
+  register_setting('branded_sharebox_settings', 'branded_sharebox_url_box', $url_box_config);
+  register_setting('branded_sharebox_settings_social_links', 'branded_sharebox_url_social_link', array(
     'type'  =>'array',
     'default'   => array(
         'facebook' =>1,
         'twitter' =>1,
         'pinterest' =>1,
         'linkedin'  =>1,
+        'sanitize_callback' => 'branded_sharebox_sanatize_array'
     )
 ));
 
@@ -72,30 +87,30 @@ add_action('admin_menu', 'branded_sharebox_register_options_page');
 
 
 
-function shorten_enqueue_scripts_admin_options($hook)
+function branded_sharebox_enqueue_scripts_admin_options($hook)
 {
   // Only add to the edit.php admin page.
   // See WP docs.
-  wp_enqueue_script('font-awesome', "https://kit.fontawesome.com/14875fd6e4.js", array('jquery'), 1.0, false);
-  wp_enqueue_script('branded_sharebox_admin_js', SHORTEN_PLUGIN_URL . '/assets/js/main.js', array('jquery', 'wp-color-picker'), 1.0, false);
-  wp_enqueue_style('branded_sharebox_admin_style', SHORTEN_PLUGIN_URL . '/assets/css/admin_style.css');
-  wp_enqueue_style('bs_button_style', SHORTEN_PLUGIN_URL . '/assets/css/style.css');
+  wp_enqueue_style('font-awesome', "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+  wp_enqueue_script('branded_sharebox_admin_js', BRANDED_SHAREBOX_PLUGIN_URL . '/assets/js/main.js', array('jquery', 'wp-color-picker'), 1.0, false);
+  wp_enqueue_style('branded_sharebox_admin_style', BRANDED_SHAREBOX_PLUGIN_URL . '/assets/css/admin_style.css');
+  wp_enqueue_style('branded_sharebox_button_style', BRANDED_SHAREBOX_PLUGIN_URL . '/assets/css/style.css');
   wp_enqueue_style('wp-color-picker');
 }
 
-add_action('admin_enqueue_scripts', 'shorten_enqueue_scripts_admin_options');
+add_action('admin_enqueue_scripts', 'branded_sharebox_enqueue_scripts_admin_options');
 function branded_sharebox_option_page_manage_urls()
 {
-  include_once SHORTEN_PLUGIN_DIR . 'option-pages/manage-urls-page.php';
+  include_once BRANDED_SHAREBOX_PLUGIN_DIR . 'option-pages/manage-urls-page.php';
 }
 
 
 function branded_sharebox_option_page()
 {
-  include_once SHORTEN_PLUGIN_DIR . '/option-pages/main-page.php';
+  include_once BRANDED_SHAREBOX_PLUGIN_DIR . '/option-pages/main-page.php';
 }
 
 function branded_sharebox_option_page_social_networks()
 {
-  include_once SHORTEN_PLUGIN_DIR . '/option-pages/social-networks-page.php';
+  include_once BRANDED_SHAREBOX_PLUGIN_DIR . '/option-pages/social-networks-page.php';
 }

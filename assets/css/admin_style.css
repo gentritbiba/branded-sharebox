@@ -38,7 +38,7 @@ input[type="number"]{
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
 }
-#shorten_icon_color_custom_text{
+#branded_sharebox_icon_color_custom_text{
   visibility: hidden;
 }
   /* Safari */
@@ -53,25 +53,25 @@ input[type="number"]{
   }
 
 
-  .bs_social_buttons_wrapper{
+  .branded_sharebox_social_buttons_wrapper{
     display: flex;
     flex-wrap: wrap;
   }
-  body .form-table .bs_social_buttons_wrapper label{
+  body .form-table .branded_sharebox_social_buttons_wrapper label{
     padding: 30px;
     width: 20%;
     margin: 5px !important;
   }
-  .bs_social_buttons_wrapper label i{
+  .branded_sharebox_social_buttons_wrapper label i{
     font-size: 20px !important;
   }
-  .bs_social_buttons_wrapper label::before{
+  .branded_sharebox_social_buttons_wrapper label::before{
     content: "" !important;
   }
-  .shorten_url_social_link_input{
+  .branded_sharebox_url_social_link_input{
     visibility: hidden;
     position: absolute;
   }
-  .shorten_url_social_link_input:not(:checked) + label, .shorten_url_social_link_input:not(:checked) + label i{
+  .branded_sharebox_url_social_link_input:not(:checked) + label, .branded_sharebox_url_social_link_input:not(:checked) + label i{
     background-color: #666;
   }

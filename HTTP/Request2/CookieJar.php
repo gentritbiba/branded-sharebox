@@ -19,7 +19,7 @@
  */
 
 /** Class representing a HTTP request message */
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2.php';
 
 /**
  * Stores cookies and passes them between HTTP requests

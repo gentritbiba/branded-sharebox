@@ -22,13 +22,13 @@
  * A class representing an URL as per RFC 3986.
  */
 if (!class_exists('Net_URL2', true)) {
-    require_once SHORTEN_PLUGIN_DIR . 'Net/URL2.php';
+    require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'Net/URL2.php';
 }
 
 /**
  * Exception class for HTTP_Request2 package
  */
-require_once SHORTEN_PLUGIN_DIR.'HTTP/Request2/Exception.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR.'HTTP/Request2/Exception.php';
 
 /**
  * Class representing a HTTP request message
@@ -623,7 +623,7 @@ class HTTP_Request2 implements SplSubject
                 return str_replace('%7E', '~', $body);
 
             } elseif (0 === strpos($this->headers['content-type'], 'multipart/form-data')) {
-                require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/MultipartBody.php';
+                require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/MultipartBody.php';
                 return new HTTP_Request2_MultipartBody(
                     $this->postParams, $this->uploads, $this->getConfig('use_brackets')
                 );
@@ -839,7 +839,7 @@ class HTTP_Request2 implements SplSubject
                 if (!class_exists($adapter, false)
                     && preg_match('/^HTTP_Request2_Adapter_([a-zA-Z0-9]+)$/', $adapter)
                 ) {
-                    include_once str_replace('_', DIRECTORY_SEPARATOR, SHORTEN_PLUGIN_DIR . $adapter) . '.php';
+                    include_once str_replace('_', DIRECTORY_SEPARATOR, BRANDED_SHAREBOX_PLUGIN_DIR . $adapter) . '.php';
                 }
                 if (!class_exists($adapter, false)) {
                     throw new HTTP_Request2_LogicException(
@@ -877,7 +877,7 @@ class HTTP_Request2 implements SplSubject
     public function setCookieJar($jar = true)
     {
         if (!class_exists('HTTP_Request2_CookieJar', false)) {
-            require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/CookieJar.php';
+            require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/CookieJar.php';
         }
 
         if ($jar instanceof HTTP_Request2_CookieJar) {

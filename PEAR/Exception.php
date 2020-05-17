@@ -58,7 +58,7 @@
  * 5) Usage example
  *
  * <code>
- *  require_once SHORTEN_PLUGIN_DIR . 'PEAR/Exception.php';
+ *  require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'PEAR/Exception.php';
  *
  *  class Test {
  *     function foo() {

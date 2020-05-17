@@ -19,7 +19,7 @@
  */
 
 /** Exception class for HTTP_Request2 package */
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Exception.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Exception.php';
 
 /**
  * Class for building multipart/form-data request body

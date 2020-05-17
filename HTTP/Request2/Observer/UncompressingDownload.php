@@ -19,7 +19,7 @@
  * @link      http://pear.php.net/package/HTTP_Request2
  */
 
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Response.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Response.php';
 
 /**
  * An observer that saves response body to stream, possibly uncompressing it
@@ -50,8 +50,8 @@ require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Response.php';
  * Example usage follows:
  *
  * <code>
- * require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2.php';
- * require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Observer/UncompressingDownload.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Observer/UncompressingDownload.php';
  *
  * #$inPath = 'http://carsten.codimi.de/gzip.yaws/daniels.html';
  * #$inPath = 'http://carsten.codimi.de/gzip.yaws/daniels.html?deflate=on';

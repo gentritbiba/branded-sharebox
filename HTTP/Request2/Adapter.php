@@ -21,7 +21,7 @@
 /**
  * Class representing a HTTP response
  */
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Response.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Response.php';
 
 /**
  * Base class for HTTP_Request2 adapters

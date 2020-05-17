@@ -22,7 +22,7 @@
 /**
  * Exception class for HTTP_Request2 package
  */
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Exception.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Exception.php';
 
 /**
  * A debug observer useful for debugging / testing.
@@ -33,8 +33,8 @@ require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Exception.php';
  *
  * A simple example:
  * <code>
- * require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2.php';
- * require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Observer/Log.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Observer/Log.php';
  *
  * $request  = new HTTP_Request2('http://www.example.com');
  * $observer = new HTTP_Request2_Observer_Log();
@@ -44,9 +44,9 @@ require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Exception.php';
  *
  * A more complex example with PEAR Log:
  * <code>
- * require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2.php';
- * require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/Observer/Log.php';
- * require_once SHORTEN_PLUGIN_DIR . 'Log.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/Observer/Log.php';
+ * require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'Log.php';
  *
  * $request  = new HTTP_Request2('http://www.example.com');
  * // we want to log with PEAR log

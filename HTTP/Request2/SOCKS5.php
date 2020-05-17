@@ -19,7 +19,7 @@
  */
 
 /** Socket wrapper class used by Socket Adapter */
-require_once SHORTEN_PLUGIN_DIR . 'HTTP/Request2/SocketWrapper.php';
+require_once BRANDED_SHAREBOX_PLUGIN_DIR . 'HTTP/Request2/SocketWrapper.php';
 
 /**
  * SOCKS5 proxy connection class (used by Socket Adapter)
